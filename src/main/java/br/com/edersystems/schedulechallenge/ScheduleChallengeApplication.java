@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ScheduleChallengeApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ScheduleChallengeApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(ScheduleChallengeApplication.class, args);
+    }
 }
