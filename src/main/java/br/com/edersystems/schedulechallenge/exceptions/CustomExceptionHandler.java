@@ -88,7 +88,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(new GenericError(String.valueOf(HttpStatus.UNPROCESSABLE_ENTITY.value()), message), new org.springframework.http.HttpHeaders(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-
     @ExceptionHandler({NotFoundException.class})
     public ResponseEntity<?> handleNotFound(NotFoundException ex) {
 

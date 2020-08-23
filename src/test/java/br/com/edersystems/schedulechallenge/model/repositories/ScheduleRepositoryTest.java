@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -34,7 +33,7 @@ public class ScheduleRepositoryTest {
 
     @Test
     public void successfullScheduleCreation() {
-        Schedule schedule = repository.save(new Schedule(BigDecimal.ONE.longValue(), LocalDate.of(2020, 8, 23), "Teste de criação da agenda", ScheduleType.CLIENT));
+        Schedule schedule = repository.save(new Schedule(LocalDate.of(2020, 8, 23), "Teste de criação da agenda", ScheduleType.CLIENT));
         assertNotNull(schedule);
         System.out.println(schedule.getScheduleDate());
         assertNotNull(schedule.getId());
@@ -42,7 +41,7 @@ public class ScheduleRepositoryTest {
 
     @Test
     public void getSuccessfullScheduleById() {
-        Schedule schedule = repository.save(new Schedule(BigDecimal.ONE.longValue(), LocalDate.of(2020, 8, 23), "Teste de criação da agenda", ScheduleType.CLIENT));
+        Schedule schedule = repository.save(new Schedule(LocalDate.of(2020, 8, 23), "Teste de criação da agenda", ScheduleType.CLIENT));
         assertNotNull(schedule);
         Optional<Schedule> scheduleRetrivied = repository.findById(schedule.getId());
         assertTrue(scheduleRetrivied.isPresent());

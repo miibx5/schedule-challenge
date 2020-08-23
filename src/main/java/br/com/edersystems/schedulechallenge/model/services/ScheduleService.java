@@ -58,7 +58,7 @@ public class ScheduleService {
     }
 
     private Schedule buildSchedule(ScheduleRequestCreate request) {
-        return new Schedule(request.getId(), getScheduleDate(request), request.getDescricao(), getScheduleType(request.getTipo()));
+        return new Schedule(getScheduleDate(request), request.getDescricao(), getScheduleType(request.getTipo()));
     }
 
     private LocalDate getScheduleDate(ScheduleRequestCreate request) {
@@ -68,10 +68,6 @@ public class ScheduleService {
         }
         switch(getScheduleType(request.getTipo())) {
             case CLIENT:
-                System.out.println("getScheduleType#localDateUtil.getTomorrow():" + localDateUtil.getTomorrow());
-                System.out.println("getScheduleType:" + localDateUtil.getTomorrow().plusDays(BigDecimal.ONE.intValue()));
-                LocalDate testLocalDate = localDateUtil.getTomorrow().plusDays(BigDecimal.ONE.intValue());
-                System.out.println("getScheduleType#testLocalDate: " + testLocalDate);
                 return localDateUtil.getTomorrow().plusDays(BigDecimal.ONE.intValue());
             case FORUM:
                 return localDateUtil.getTomorrow().plusDays(3);
@@ -92,13 +88,10 @@ public class ScheduleService {
         if(Objects.isNull(request.getTipo())) {
             throw new UnProcessableEntityException("schedule.required_type");
         }
-        if(Objects.isNull(request.getId())) {
-            throw new UnProcessableEntityException("schedule.required_id");
-        }
+
     }
 
     private ScheduleType getScheduleType(String type) {
-        System.out.println(type.toUpperCase());
         return EnumSet.allOf(ScheduleType.class).stream()
                 .filter(t -> t.name().equals(type.toUpperCase()))
                 .findFirst()

@@ -30,7 +30,6 @@ public class LocalDateUtil {
     }
 
     public LocalDate getTomorrow() {
-        System.out.println("getTomorrow()#getToday():" + getToday());
         return getToday().plusDays(BigDecimal.ONE.intValue());
     }
 

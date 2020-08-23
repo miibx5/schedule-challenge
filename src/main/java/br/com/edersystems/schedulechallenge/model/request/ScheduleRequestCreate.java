@@ -17,13 +17,11 @@ import lombok.Setter;
 @Getter
 public class ScheduleRequestCreate implements java.io.Serializable {
 
-    private static final long serialVersionUID = -1842396830353314547L;
+    private static final long serialVersionUID = -6281307176371784371L;
 
     private String data;
 
     private String descricao;
-
-    private Long id;
 
     private String tipo;
 }

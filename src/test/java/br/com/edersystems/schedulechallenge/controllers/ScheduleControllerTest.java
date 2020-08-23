@@ -81,12 +81,11 @@ public class ScheduleControllerTest {
         ScheduleRequestCreate request = new ScheduleRequestCreate();
         request.setData("2020-08-23");
         request.setDescricao("Teste de criacao da agenda");
-        request.setId(BigDecimal.ONE.longValue());
         return request;
     }
 
     private Schedule getSchedule() {
-        return new Schedule(BigDecimal.ONE.longValue(), LocalDate.of(2020, 8, 23), "Teste de criação da agenda", ScheduleType.CLIENT);
+        return new Schedule(LocalDate.of(2020, 8, 23), "Teste de criação da agenda", ScheduleType.CLIENT);
     }
 
     private ScheduleResponseTO getScheduleResponse() {
