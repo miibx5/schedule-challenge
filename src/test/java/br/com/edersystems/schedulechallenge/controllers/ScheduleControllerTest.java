@@ -11,11 +11,12 @@ Codification.................: UTF-8
 package br.com.edersystems.schedulechallenge.controllers;
 
 import br.com.edersystems.schedulechallenge.model.entities.Schedule;
+import br.com.edersystems.schedulechallenge.model.entities.User;
 import br.com.edersystems.schedulechallenge.model.entities.enums.ScheduleType;
-import br.com.edersystems.schedulechallenge.model.repositories.ScheduleRepository;
-import br.com.edersystems.schedulechallenge.model.request.ScheduleRequestCreate;
-import br.com.edersystems.schedulechallenge.model.response.ScheduleResponseTO;
-import br.com.edersystems.schedulechallenge.model.services.ScheduleService;
+import br.com.edersystems.schedulechallenge.model.repositories.schedule.ScheduleRepository;
+import br.com.edersystems.schedulechallenge.model.request.schedule.SchedulePostRequest;
+import br.com.edersystems.schedulechallenge.model.response.schedule.ScheduleTO;
+import br.com.edersystems.schedulechallenge.model.services.schedule.ScheduleService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,13 +55,13 @@ public class ScheduleControllerTest {
 
     @Test
     public void successfullScheduleCreation() throws Exception {
-        ScheduleRequestCreate request = getRequest();
+        SchedulePostRequest request = getRequest();
         Schedule schedule = getSchedule();
-        ScheduleResponseTO response = getScheduleResponse();
+        ScheduleTO response = getScheduleResponse();
 
         System.out.println(mapper.writeValueAsString(request));
 
-        when(service.createSchedule(any(ScheduleRequestCreate.class))).thenReturn(response);
+        when(service.createSchedule(any(SchedulePostRequest.class))).thenReturn(response);
         when(repository.save(any(Schedule.class))).thenReturn(schedule);
         mockMvc.perform(post("/agendas")
                 .content(mapper.writeValueAsString(request))
@@ -71,24 +72,24 @@ public class ScheduleControllerTest {
 
     @Test
     public void getSuccessfullScheduleById() throws Exception {
-        ScheduleResponseTO response = getScheduleResponse();
+        ScheduleTO response = getScheduleResponse();
         when(service.getScheduleById(any(Long.class))).thenReturn(response);
         mockMvc.perform(get("/agendas/{id}", BigDecimal.ONE.longValue()))
                 .andExpect(status().isOk());
     }
 
-    private ScheduleRequestCreate getRequest() {
-        ScheduleRequestCreate request = new ScheduleRequestCreate();
+    private SchedulePostRequest getRequest() {
+        SchedulePostRequest request = new SchedulePostRequest();
         request.setData("2020-08-23");
         request.setDescricao("Teste de criacao da agenda");
         return request;
     }
 
     private Schedule getSchedule() {
-        return new Schedule(LocalDate.of(2020, 8, 23), "Teste de criação da agenda", ScheduleType.CLIENT);
+        return new Schedule(new User("name", "013.717.857-32"), ScheduleType.CLIENT, LocalDate.of(2020, 8, 23), "Teste de criação da agenda");
     }
 
-    private ScheduleResponseTO getScheduleResponse() {
-        return new ScheduleResponseTO(getSchedule().getScheduleDate().toString(), getSchedule().getDescription(), getSchedule().getId());
+    private ScheduleTO getScheduleResponse() {
+        return new ScheduleTO(getSchedule().getScheduleDate().toString(), getSchedule().getDescription(), getSchedule().getId());
     }
 }

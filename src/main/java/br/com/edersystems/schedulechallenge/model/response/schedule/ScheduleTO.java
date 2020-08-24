@@ -8,16 +8,16 @@ Codification.................: UTF-8
  Éder L. Costa - © Copyright 2020 - All Rights Reserved
 ...........................................................
 */
-package br.com.edersystems.schedulechallenge.model.response;
+package br.com.edersystems.schedulechallenge.model.response.schedule;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-public class ScheduleResponseTO implements java.io.Serializable {
+public class ScheduleTO implements java.io.Serializable {
 
-    private static final long serialVersionUID = -3867289828867270012L;
+    private static final long serialVersionUID = -6568602891185657215L;
 
     private String data;
 
@@ -25,11 +25,11 @@ public class ScheduleResponseTO implements java.io.Serializable {
 
     private Long id;
 
-    public ScheduleResponseTO() {
+    public ScheduleTO() {
         this(null, null, null);
     }
 
-    public ScheduleResponseTO(String data, String descricao, Long id) {
+    public ScheduleTO(String data, String descricao, Long id) {
         this.data = data;
         this.descricao = descricao;
         this.id = id;

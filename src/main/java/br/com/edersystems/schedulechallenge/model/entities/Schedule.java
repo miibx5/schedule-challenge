@@ -23,15 +23,20 @@ import java.time.LocalDate;
 @Table(name = "schedules")
 public class Schedule implements java.io.Serializable {
 
-    private static final long serialVersionUID = -1557225671240499141L;
+    private static final long serialVersionUID = -1427407054510382174L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull(message = "schedule.required_user")
+    @JoinColumn(name = "owner_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    private final User owner;
+
     @Enumerated(EnumType.STRING)
     @NotNull(message = "schedule.required_type")
-    private ScheduleType type;
+    private final ScheduleType type;
 
     @NotNull(message = "schedule.required_date")
     @Column(nullable = false)
@@ -42,14 +47,13 @@ public class Schedule implements java.io.Serializable {
     private final String description;
 
     public Schedule() {
-        this(null, null, null);
+        this(null, null, null, null);
     }
 
-    public Schedule(LocalDate scheduleDate, String description, ScheduleType type) {
+    public Schedule(User owner, ScheduleType type, LocalDate scheduleDate, String description) {
+        this.owner = owner;
+        this.type = type;
         this.scheduleDate = scheduleDate;
         this.description = description;
-        this.type = type;
     }
-
-  
 }

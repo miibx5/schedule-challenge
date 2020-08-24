@@ -10,9 +10,11 @@ Codification.................: UTF-8
 */
 package br.com.edersystems.schedulechallenge.controllers;
 
-import br.com.edersystems.schedulechallenge.model.request.ScheduleRequestCreate;
-import br.com.edersystems.schedulechallenge.model.response.ScheduleResponseTO;
-import br.com.edersystems.schedulechallenge.model.services.ScheduleService;
+import br.com.edersystems.schedulechallenge.model.request.PaginatedRequest;
+import br.com.edersystems.schedulechallenge.model.request.schedule.SchedulePostRequest;
+import br.com.edersystems.schedulechallenge.model.response.PaginatedResult;
+import br.com.edersystems.schedulechallenge.model.response.schedule.ScheduleTO;
+import br.com.edersystems.schedulechallenge.model.services.schedule.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -33,12 +35,17 @@ public class ScheduleController {
     }
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<ScheduleResponseTO> createSchedule(@Valid @RequestBody ScheduleRequestCreate request) {
+    public ResponseEntity<ScheduleTO> createSchedule(@Valid @RequestBody SchedulePostRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createSchedule(request));
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ScheduleResponseTO> getScheduleById(@PathVariable Long id) {
+    public ResponseEntity<ScheduleTO> getScheduleById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getScheduleById(id));
+    }
+
+    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PaginatedResult<ScheduleTO>> getSchedulesByOwner(@RequestHeader String cpf, @RequestBody PaginatedRequest request) {
+        return ResponseEntity.ok(service.getSchedulesByOwner(cpf, request));
     }
 }
